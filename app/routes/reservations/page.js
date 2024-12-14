@@ -12,7 +12,7 @@ export default function ReservationPage() {
       .get("/api/reservation")
       .then((response) => {
         const reservationData = response.data.map(
-          (reservation) => new Reservation(reservation.id, reservation.customerId, reservation.tableId, reservation.date)
+          (reservation) => new Reservation(reservation.id, reservation.customerId, reservation.tableId, reservation.reservationDate)
         );
         setReservations(reservationData);
       })
@@ -58,7 +58,7 @@ export default function ReservationPage() {
                 <td className="border-4 border-black">{reservation.id}</td>
                 <td className="border-4 border-black">{reservation.customerId}</td>
                 <td className="border-4 border-black">{reservation.tableId}</td>
-                <td className="border-4 border-black">{reservation.date}</td>
+                <td className="border-4 border-black">{reservation.reservationDate}</td>
                 <td className="border-4 border-black">
                   <Link href={`/routes/reservations/update/${reservation.id}`}>
                     <button className="mr-2 text-blue-600">Update</button>

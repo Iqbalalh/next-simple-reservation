@@ -3,11 +3,11 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter, useParams } from "next/navigation";
 
-export default function UpdateReservation() {
+export default function UpreservationDateReservation() {
   const { id } = useParams();
   const [customerId, setCustomerId] = useState("");
   const [tableId, setTableId] = useState("");
-  const [date, setDate] = useState("");
+  const [reservationDate, setreservationDate] = useState("");
   const [error, setError] = useState(null);
 
   const router = useRouter();
@@ -19,7 +19,7 @@ export default function UpdateReservation() {
         const reservation = response.data;
         setCustomerId(reservation.customerId);
         setTableId(reservation.tableId);
-        setDate(reservation.date);
+        setreservationDate(reservation.reservationDate);
       })
       .catch((error) => {
         console.error("Error fetching reservation:", error);
@@ -33,7 +33,7 @@ export default function UpdateReservation() {
       const response = await axios.put(`/api/reservation/${id}`, {
         customerId,
         tableId,
-        date,
+        reservationDate,
       });
       router.push("/routes/reservations");
     } catch (error) {
@@ -48,7 +48,9 @@ export default function UpdateReservation() {
       {error && <p className="text-red-600">{error}</p>}
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label htmlFor="customerId" className="block">Pelanggan ID</label>
+          <label htmlFor="customerId" className="block">
+            Pelanggan ID
+          </label>
           <input
             type="text"
             id="customerId"
@@ -58,7 +60,9 @@ export default function UpdateReservation() {
           />
         </div>
         <div>
-          <label htmlFor="tableId" className="block">Meja ID</label>
+          <label htmlFor="tableId" className="block">
+            Meja ID
+          </label>
           <input
             type="text"
             id="tableId"
@@ -68,16 +72,21 @@ export default function UpdateReservation() {
           />
         </div>
         <div>
-          <label htmlFor="date" className="block">Tanggal</label>
+          <label htmlFor="reservationDate" className="block">
+            Tanggal
+          </label>
           <input
-            type="date"
-            id="date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
+            type="reservationDate"
+            id="reservationDate"
+            value={reservationDate}
+            onChange={(e) => setreservationDate(e.target.value)}
             className="border-2 border-gray-300 p-2"
           />
         </div>
-        <button type="submit" className="bg-blue-600 text-white py-2 px-4 rounded">
+        <button
+          type="submit"
+          className="bg-blue-600 text-white py-2 px-4 rounded"
+        >
           Perbarui Pemesanan
         </button>
       </form>

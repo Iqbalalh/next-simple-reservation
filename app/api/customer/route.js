@@ -2,7 +2,6 @@ import pool from "@/app/lib/db";
 import { NextResponse } from "next/server";
 
 export async function GET(req) {
-  const asda = req.query;
   try {
     const [customers] = await pool.query("SELECT * FROM customers");
     return NextResponse.json(customers, { status: 200 });

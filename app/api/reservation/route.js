@@ -3,7 +3,9 @@ import { NextResponse } from "next/server";
 
 export async function GET(req) {
   try {
-    const [reservations] = await pool.query("SELECT * FROM reservations");
+    const [reservations] = await pool.query(
+      "SELECT id, customerId AS customerId, tableId, reservationDate FROM reservations"
+    );
     return NextResponse.json(reservations, { status: 200 });
   } catch (error) {
     console.error("Error fetching reservations:", error);
@@ -16,21 +18,26 @@ export async function GET(req) {
 
 export async function POST(req) {
   try {
-    const { customerId, tableId, reservationDate, reservationTime } = await req.json();
+    const { customerId, tableId, reservationDate } = await req.json();
 
-    if (!customerId || !tableId || !reservationDate || !reservationTime) {
+    if (!customerId || !tableId || !reservationDate) {
       return NextResponse.json(
-        { error: "Customer ID, Table ID, Tanggal, dan Waktu reservasi diperlukan" },
+        { error: "Customer ID, Table ID, dan Tanggal reservasi diperlukan" },
         { status: 400 }
       );
     }
 
     const [result] = await pool.query(
-      "INSERT INTO reservations (customer_id, table_id, reservation_date, reservation_time) VALUES (?, ?, ?, ?)",
-      [customerId, tableId, reservationDate, reservationTime]
+      "INSERT INTO reservations (customerId, tableId, reservationDate) VALUES (?, ?, ?)",
+      [customerId, tableId, reservationDate]
     );
 
-    const newReservation = { id: result.insertId, customerId, tableId, reservationDate, reservationTime };
+    const newReservation = {
+      id: result.insertId,
+      customerId,
+      tableId,
+      reservationDate,
+    };
     return NextResponse.json(newReservation, { status: 201 });
   } catch (error) {
     console.error("Error creating reservation:", error);

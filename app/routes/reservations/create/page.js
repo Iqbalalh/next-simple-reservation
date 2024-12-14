@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 export default function CreateReservation() {
   const [customerId, setCustomerId] = useState("");
   const [tableId, setTableId] = useState("");
-  const [date, setDate] = useState("");
+  const [reservationDate, setReserve] = useState("");
   const [error, setError] = useState(null);
 
   const router = useRouter();
@@ -17,7 +17,7 @@ export default function CreateReservation() {
       const response = await axios.post("/api/reservation", {
         customerId,
         tableId,
-        date,
+        reservationDate,
       });
       router.push("/routes/reservations");
     } catch (error) {
@@ -51,12 +51,12 @@ export default function CreateReservation() {
           />
         </div>
         <div>
-          <label htmlFor="date" className="block">Tanggal</label>
+          <label htmlFor="reservationDate" className="block">Tanggal</label>
           <input
             type="date"
-            id="date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
+            id="reservationDate"
+            value={reservationDate}
+            onChange={(e) => setReserve(e.target.value)}
             className="border-2 border-gray-300 p-2"
           />
         </div>
