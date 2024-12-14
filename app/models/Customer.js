@@ -7,7 +7,7 @@ export class Customer extends BaseModel {
     this.email = email;
   }
 
-  displayInfo() {
+  displayCustomerInfo() {
     return `${this.name} (${this.email})`;
   }
 }

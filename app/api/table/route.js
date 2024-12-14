@@ -16,9 +16,9 @@ export async function GET(req) {
 
 export async function POST(req) {
   try {
-    const { tableName, tableCapacity } = await req.json();
+    const { tableName, capacity } = await req.json();
 
-    if (!tableName || !tableCapacity) {
+    if (!tableName || !capacity) {
       return NextResponse.json(
         { error: "Nama tabel dan kapasitas diperlukan" },
         { status: 400 }
@@ -26,11 +26,11 @@ export async function POST(req) {
     }
 
     const [result] = await pool.query(
-      "INSERT INTO tables (table_name, table_capacity) VALUES (?, ?)",
-      [tableName, tableCapacity]
+      "INSERT INTO tables (table_name, capacity) VALUES (?, ?)",
+      [tableName, capacity]
     );
 
-    const newTable = { id: result.insertId, tableName, tableCapacity };
+    const newTable = { id: result.insertId, tableName, capacity };
     return NextResponse.json(newTable, { status: 201 });
   } catch (error) {
     console.error("Error creating table:", error);

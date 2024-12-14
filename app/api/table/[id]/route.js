@@ -3,9 +3,9 @@ import { NextResponse } from "next/server";
 
 export async function PUT(req, { params }) {
   const { id } = await params;
-  const { tableName, tableCapacity } = await req.json();
+  const { tableName, capacity } = await req.json();
 
-  if (!tableName || !tableCapacity) {
+  if (!tableName || !capacity) {
     return NextResponse.json(
       { error: "Nama tabel dan kapasitas diperlukan" },
       { status: 400 }
@@ -14,8 +14,8 @@ export async function PUT(req, { params }) {
 
   try {
     const [result] = await pool.query(
-      "UPDATE tables SET table_name = ?, table_capacity = ? WHERE id = ?",
-      [tableName, tableCapacity, id]
+      "UPDATE tables SET table_name = ?, capacity = ? WHERE id = ?",
+      [tableName, capacity, id]
     );
 
     if (result.affectedRows === 0) {
@@ -25,7 +25,7 @@ export async function PUT(req, { params }) {
       );
     }
 
-    return NextResponse.json({ id, tableName, tableCapacity }, { status: 200 });
+    return NextResponse.json({ id, tableName, capacity }, { status: 200 });
   } catch (error) {
     console.error("Error updating table:", error);
     return NextResponse.json(

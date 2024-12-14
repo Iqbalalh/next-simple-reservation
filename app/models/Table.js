@@ -1,16 +1,16 @@
 import { BaseModel } from "./BaseModel";
 
 export class Table extends BaseModel {
-  constructor(id, tableNumber, capacity, isAvailable) {
+  constructor(id, tableName, capacity, status) {
     super(id);
-    this.tableNumber = tableNumber;
+    this.tableName = tableName;
     this.capacity = capacity;
-    this.isAvailable = isAvailable;
+    this.status = status;
   }
 
   displayTableInfo() {
-    return `Table ${this.tableNumber} with capacity of ${
+    return `Table ${this.tableName} with capacity of ${
       this.capacity
-    } seats. Availability: ${this.isAvailable ? "Available" : "Reserved"}`;
+    } seats. Availability: ${this.status ? "Available" : "Reserved"}`;
   }
 }

@@ -1,10 +1,10 @@
 "use client";
 import { useState } from "react";
 import axios from "axios";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 export default function CreateTablePage() {
-  const [name, setName] = useState("");
+  const [tableName, setTableName] = useState("");
   const [capacity, setCapacity] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
@@ -13,13 +13,13 @@ export default function CreateTablePage() {
     e.preventDefault();
     setError("");
 
-    if (!name || !capacity) {
+    if (!tableName || !capacity) {
       setError("Nama dan kapasitas meja diperlukan.");
       return;
     }
 
     try {
-      const newTable = { name, capacity };
+      const newTable = { tableName, capacity };
       await axios.post("/api/table", newTable);
       router.push("/routes/tables"); // Redirect to table list after creation
     } catch (error) {
@@ -33,14 +33,14 @@ export default function CreateTablePage() {
       <h1 className="text-center mb-4">Tambah Meja</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label htmlFor="name" className="block mb-2">
+          <label htmlFor="table_name" className="block mb-2">
             Nama Meja
           </label>
           <input
             type="text"
-            id="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            id="table_name"
+            value={tableName}
+            onChange={(e) => setTableName(e.target.value)}
             className="border-2 border-gray-400 rounded p-2 w-full"
             required
           />

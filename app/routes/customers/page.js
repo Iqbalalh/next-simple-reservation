@@ -53,8 +53,8 @@ export default function CustomerPage() {
             </tr>
           ) : (
             customers.map((customer) => (
-              <tr key={customer.id}>
-                <td className="border-4 border-black">{customer.id}</td>
+              <tr key={customer.getId()}>
+                <td className="border-4 border-black">{customer.getId()}</td>
                 <td className="border-4 border-black">{customer.name}</td>
                 <td className="border-4 border-black">{customer.email}</td>
                 <td className="border-4 border-black">

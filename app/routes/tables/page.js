@@ -12,7 +12,7 @@ export default function TablePage() {
       .get("/api/table")
       .then((response) => {
         const tableData = response.data.map(
-          (table) => new Table(table.id, table.name, table.capacity)
+          (table) => new Table(table.id, table.table_name, table.capacity)
         );
         setTables(tableData);
       })
@@ -55,7 +55,7 @@ export default function TablePage() {
             tables.map((table) => (
               <tr key={table.id}>
                 <td className="border-4 border-black">{table.id}</td>
-                <td className="border-4 border-black">{table.name}</td>
+                <td className="border-4 border-black">{table.tableName}</td>
                 <td className="border-4 border-black">{table.capacity}</td>
                 <td className="border-4 border-black">
                   <Link href={`/routes/tables/update/${table.id}`}>
